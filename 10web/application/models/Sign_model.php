@@ -128,6 +128,8 @@ class Sign_model extends CI_Model{
 			return 1;//已激活
 		}
 	}
+
+	
 }
 	
 ?>

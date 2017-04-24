@@ -76,6 +76,7 @@ User.fn.login = function({account,password}){
     this.request.post(getUrl('/index.php/api/user/Signin'),function(err,req,body){
         //传递request参数
         try{
+            console.log(body);
             body = JSON.parse(body);
         }catch(e){
             return self.fire("登陆失败"+e);

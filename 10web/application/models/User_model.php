@@ -44,7 +44,46 @@ STR;
 	}
 
 	/**
-	*
+	*	修改用户信息
+	*	@param newNickName   新昵称
+	*	@param newProfile	新简介
+	*	@param newHeadIcon	新头像
 	*/
+	public function EditInfo($userID=null,$newNickName=null,$newProfile=null,$newHeadIcon=null){
+		$sql1_format = <<<STR
+		SELECT *
+		FROM e0_user
+		WHERE ID = '%s'
+STR;
+		$sql1 = sprintf($sql1_format,$userID);
+		$oldInfo = $this->db->query($sql1);
+		$oldNickName = null;
+		$oldProfile = null;
+		$oldHeadIcon = null;
+		foreach ($oldInfo->result() as $row) {
+			$oldNickName = $row->NickName;
+			$oldProfile = $row->Profile;
+			$oldHeadIcon = $row->HeadIcon;
+		}
+		if($newNickName == null){
+			$newNickName = $oldNickName;
+		}
+		if($newProfile == null){
+			$newProfile = $oldProfile;
+		}
+		if($newHeadIcon == null){
+			$newHeadIcon = $oldHeadIcon;
+		}
+		$sql_format = <<<STR
+		UPDATE e0_user
+		SET NickName = '%s',
+			Profile =  '%s',
+			HeadIcon = '%s'
+		WHERE ID = '%s' 
+STR;
+		$sql = sprintf($sql_format,$newNickName,$newProfile,$newHeadIcon,$userID);
+		$this->db->query($sql);
+		return $this->db->affected_rows();
+	}
 }
 ?>
